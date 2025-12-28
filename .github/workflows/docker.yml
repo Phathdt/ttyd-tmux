@@ -4,8 +4,9 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'Version tag (e.g., v1.0.0)'
+        description: 'Version tag (e.g., 1.0.0)'
         required: true
+        default: '1.0.0'
         type: string
 
 permissions:
@@ -37,12 +38,12 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            phathdt379/ttyd-tmux:${{ inputs.version }}
+            phathdt379/ttyd-tmux:v${{ inputs.version }}
             phathdt379/ttyd-tmux:latest
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ inputs.version }}
-          name: Release ${{ inputs.version }}
+          tag_name: v${{ inputs.version }}
+          name: Release v${{ inputs.version }}
           generate_release_notes: true
