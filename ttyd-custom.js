@@ -24,8 +24,21 @@
                     createControlBar();
                 }
                 setupKeyboardResize();
+                setupAutoCopy();
             }
         }, 100);
+    }
+
+    function setupAutoCopy() {
+        // Auto-copy selection to clipboard
+        term.onSelectionChange(function() {
+            var selection = term.getSelection();
+            if (selection) {
+                navigator.clipboard.writeText(selection).catch(function(err) {
+                    console.log("Clipboard write failed:", err);
+                });
+            }
+        });
     }
 
     function createControlBar() {
